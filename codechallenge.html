@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>24hr code challenge</title>
+    <link rel="stylesheet" type="text/css" href="styles-codechallenge.css">
+  </head>
+  <body>
+    <nav>
+      <ul class="city-nav">
+        <li><a class="selected">Cupertino</a></li>
+        <li><a>New York City</a></li>
+        <li><a>London</a></li>
+        <li><a>Amsterdam</a></li>
+        <li><a>Tokyo</a></li>
+        <li><a>Hong Kong</a></li>
+        <li><a>Sydney</a></li>
+        <li class="indicator-bar"></li>
+      </ul>
+    </nav>
+  </body>
+</html>
+
+<script>
+  const indicatorBar = document.querySelector('.indicator-bar');
+  const cityNavItems = document.querySelectorAll('ul.city-nav>li');
+
+  function handleIndicatorBar(el) {
+    cityNavItems.forEach(item => {
+      item.classList.remove('selected');
+    });
+    
+    let elStyles = window.getComputedStyle(el);
+    let offsetPadding = elStyles.getPropertyValue('margin-left').slice(0,-2);
+    console.log(offsetPadding);
+    
+    indicatorBar.style.width = `${el.offsetWidth}px`;
+    indicatorBar.style.left = `${el.offsetLeft}px`;
+    // indicatorBar.style.left = `${el.offsetLeft - offsetPadding}px`;
+
+    el.classList.add('selected');
+  }
+
+  cityNavItems.forEach((item, index) => {
+    item.addEventListener('click', (e) => { handleIndicatorBar(e.target)});
+    item.classList.contains('selected') && handleIndicatorBar(item);
+  });
+</script>
